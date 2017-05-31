@@ -126,6 +126,8 @@ class InstagramAPI:
 
     def logout(self):
         logout = self.SendRequest('accounts/logout/')
+        if logout: self.isLoggedIn = False
+        return logout
 
     def uploadPhoto(self, photo, caption = None, upload_id = None):
         if upload_id is None:
