@@ -125,7 +125,11 @@ class InstagramAPI:
         return self.SendRequest('qe/expose/', self.generateSignature(data))
 
     def logout(self):
-        logout = self.SendRequest('accounts/logout/')
+        self.SendRequest('accounts/logout/')
+        if self.LastJson['status'] == 'ok': 
+            self.isLoggedIn = False
+            return True
+        return False
 
     def uploadPhoto(self, photo, caption = None, upload_id = None):
         if upload_id is None:
