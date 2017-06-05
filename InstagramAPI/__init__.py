@@ -699,7 +699,8 @@ class InstagramAPI:
         if (post != None): # POST
             response = self.s.post(self.API_URL + endpoint, data=post) # , verify=False
         else: # GET
-            response = self.s.get(self.API_URL + endpoint) # , verify=False
+            try: response = self.s.get(self.API_URL + endpoint) # , verify=False
+            except ChunkedEncodingError: self.SendRequest(endpoint,post,login)  # retry after error
 
         if response.status_code == 200:
             self.LastResponse = response
