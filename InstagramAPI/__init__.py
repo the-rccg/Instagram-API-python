@@ -782,3 +782,19 @@ class InstagramAPI:
             except KeyError as e:
                 break
         return liked_items
+    
+    def getHashTagFeedSince(self, hashtag, timestamp, scan_rate = 1):
+        next_id = ''
+        hashtag_items = []
+        for x in range(0, scan_rate):
+            temp = self.getHashtagFeed(hashtag, next_id)
+            temp = self.LastJson
+            try:
+                next_id = temp["next_max_id"]
+                for item in temp["items"]:
+                    hashtag_items.append(item)
+                if temp['items'][-1]['device_timestamp'] < timestamp:
+                    return hashtag_items
+            except KeyError as e:
+                break
+        return hashtag_items
